@@ -12,8 +12,8 @@ class HorizontalAndVerticalPage extends StatelessWidget {
         title: const Text('Horizontal and Vertical'),
       ),
       body: _VerticallyHorizontalCardsList(
-        verticalCount: 10,
-        horizontalCount: 10,
+        verticalCount: 20,
+        horizontalCount: 20,
         cardHeight: 100,
         cardWidth: 100,
         iconSize: 48,
