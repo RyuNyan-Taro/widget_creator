@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:widget_creator/view/horizontal_and_vertical_view.dart';
+import 'package:widget_creator/view/square_tiles_view.dart';
 
 class CardPage extends StatelessWidget {
   const CardPage({super.key});
@@ -48,7 +49,7 @@ final List<_CardData> _cardDataList = [
   ),
   _CardData(
     text: 'Square tiles',
-    nextPage: () => const _DummyPage(),
+    nextPage: () => const SquareTilesPage(),
   ),
   _CardData(
     text: 'Has sub widgets',
