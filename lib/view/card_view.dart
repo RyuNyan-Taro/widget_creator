@@ -106,7 +106,7 @@ class _TextCard extends StatelessWidget {
 }
 
 class _DummyPage extends StatelessWidget {
-  const _DummyPage({super.key});
+  const _DummyPage();
 
   @override
   Widget build(BuildContext context) {
