@@ -37,23 +37,35 @@ class _MyCards extends StatelessWidget {
       children: List.generate(cardTexts.length, (index) {
         return Padding(
           padding: const EdgeInsets.only(bottom: 20),
-          child: SizedBox(
-            width: 300,
-            child: Card(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  children: <Widget>[
-                    Icon(Icons.star),
-                    SizedBox(width: 16),
-                    Text(cardTexts[index]),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          child: _TextCard(text: cardTexts[index])
         );
       }),
+    );
+  }
+}
+
+class _TextCard extends StatelessWidget {
+
+  final String text;
+
+  const _TextCard({required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 250,
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            children: <Widget>[
+              Icon(Icons.person_2_rounded),
+              SizedBox(width: 16),
+              Text(text),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
