@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widget_creator/view/horizontal_and_vertical_view.dart';
 
 class CardPage extends StatelessWidget {
   const CardPage({super.key});
@@ -23,48 +24,97 @@ class _MyCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> cardTexts = [
-      'Horizontal and vertical',
-      'Square tiles',
-      'Has sub widgets',
-      'Update with state',
-      'Action buttons'
-    ];
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: List.generate(cardTexts.length, (index) {
+      children: List.generate(_cardDataList.length, (index) {
         return Padding(
           padding: const EdgeInsets.only(bottom: 20),
-          child: _TextCard(text: cardTexts[index])
+          child: _TextCard(
+              text: _cardDataList[index].text,
+              nextPage: _cardDataList[index].nextPage
+          )
         );
       }),
     );
   }
 }
 
+final List<_CardData> _cardDataList = [
+  _CardData(
+    text: 'Horizontal and vertical',
+    nextPage: () => const HorizontalAndVerticalPage(),
+  ),
+  _CardData(
+    text: 'Square tiles',
+    nextPage: () => const _DummyPage(),
+  ),
+  _CardData(
+    text: 'Has sub widgets',
+    nextPage: () => const _DummyPage(),
+  ),
+  _CardData(
+    text: 'Update with state',
+    nextPage: () => const _DummyPage(),
+  ),
+  _CardData(
+    text: 'Action buttons',
+    nextPage: () => const _DummyPage(),
+  ),
+];
+
+
+class _CardData {
+  final String text;
+  final Widget Function() nextPage;
+
+  _CardData({required this.text, required this.nextPage});
+}
+
 class _TextCard extends StatelessWidget {
 
   final String text;
+  final Widget Function() nextPage;
 
-  const _TextCard({required this.text});
+  const _TextCard({
+    required this.text,
+    required this.nextPage
+  });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 250,
-      child: Card(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            children: <Widget>[
-              Icon(Icons.person_2_rounded),
-              SizedBox(width: 16),
-              Text(text),
-            ],
-          ),
-        ),
+    return ListTile(
+      onTap: () {
+        Navigator.push(context, PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+          nextPage(),
+          transitionsBuilder:
+              (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity: animation,
+              child: child,
+            );
+          },
+        ),);
+      },
+      leading: Icon(Icons.person_2_rounded),
+      title : Text(text)
+    );
+  }
+}
+
+class _DummyPage extends StatelessWidget {
+  const _DummyPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Dummy Page'),
+      ),
+      body: const Center(
+        child: Text('It has been creating, please wait with relax.'),
       ),
     );
   }
