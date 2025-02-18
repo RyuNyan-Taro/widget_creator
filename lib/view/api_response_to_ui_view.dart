@@ -7,7 +7,7 @@ class ApiResponseToUiPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Api Response To Ui Page'),
+        title: const Text('Api Response To Ui'),
       ),
       body: const Center(
         child: Text('Hello, this is Api Response To Ui Page.'),
