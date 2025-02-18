@@ -36,7 +36,6 @@ class _NavigateText extends StatelessWidget {
   final Widget Function() nextPage;
 
   const _NavigateText({
-    super.key,
     required this.text,
     required this.nextPage,
   });
