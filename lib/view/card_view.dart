@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:widget_creator/view/horizontal_and_vertical_view.dart';
 import 'package:widget_creator/view/square_tiles_view.dart';
 import 'package:widget_creator/view/has_sub_widget_view.dart';
-import 'package:widget_creator/view/api_response_to_ui/api_response_to_ui_view.dart';
+import 'package:widget_creator/view/api_response_to_ui/screens/api_response_to_ui_view.dart';
 
 
 class CardPage extends StatelessWidget {
