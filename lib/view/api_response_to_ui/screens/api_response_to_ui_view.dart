@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:widget_creator/view/api_response_to_ui/models/article.dart';
+import 'package:widget_creator/view/api_response_to_ui/models/user.dart';
 import 'package:widget_creator/view/api_response_to_ui/widgets/article_container.dart';
 
 class ApiResponseToUiPage extends StatefulWidget {
@@ -60,7 +61,16 @@ class _ApiResponseToUiState extends State<ApiResponseToUiPage> {
                 },
               ),
             ),
-            ArticleContainer()
+            ArticleContainer(article: Article(
+                title: 'テスト',
+                user: User(
+                id: 'qii-taro',
+                profileImageUrl: 'https://firebasestorage.googleapis.com/v0/b/gs-expansion-test.appspot.com/o/unknown_person.png?alt=media',
+                ),
+                createdAt: DateTime.now(),
+        tags: ['Flutter', 'dart'],
+        url: 'https://example.com',
+        ),        ),
           ]
         )
       ),
