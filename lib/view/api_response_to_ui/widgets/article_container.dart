@@ -45,7 +45,7 @@ class _Layout extends StatelessWidget {
     return Container(
         padding: const EdgeInsets.symmetric(
         horizontal: 20,
-        vertical: 16,
+        vertical: 12,
     ),
     height: 180,
     decoration: const BoxDecoration(
@@ -72,6 +72,7 @@ class _Contents extends StatelessWidget {
         _Date(createdAt: article.createdAt),
         _Title(title: article.title),
         _Tags(tags: article.tags),
+        const Spacer(),
         _Footer(article: article),
       ],
     );
@@ -124,11 +125,13 @@ class _Tags extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      '#${tags.join(' #')}', // ←文字列の配列をjoinで結合
+      '#${tags.join(' #')}',
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
       style: const TextStyle(
         fontSize: 12,
         color: Colors.white,
-        fontStyle: FontStyle.italic, // ←フォントスタイルを斜体に変更
+        fontStyle: FontStyle.italic,
       ),
     );
   }
