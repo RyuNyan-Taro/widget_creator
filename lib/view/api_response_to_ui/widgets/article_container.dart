@@ -10,6 +10,7 @@ class ArticleContainer extends StatelessWidget {
         horizontal: 20,
         vertical: 16,
       ),
+      height: 180,
       decoration: const BoxDecoration(
         color: Color(0xFF55C500), // ← 背景色を指定
         borderRadius: BorderRadius.all(

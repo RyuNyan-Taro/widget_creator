@@ -60,9 +60,7 @@ class _ApiResponseToUiState extends State<ApiResponseToUiPage> {
                 },
               ),
             ),
-            const Center(
-                child: ArticleContainer()
-            ),
+            ArticleContainer()
           ]
         )
       ),
