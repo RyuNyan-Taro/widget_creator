@@ -62,51 +62,9 @@ class _ApiResponseToUiState extends State<ApiResponseToUiPage> {
             ),
             Expanded(
               child: ListView(
-                // children: articles
-                //     .map((article) => ArticleContainer(article: article))
-                //     .toList(),
-                children: [
-                  ArticleContainer(article: Article(
-                    title: 'テスト',
-                    user: User(
-                      id: 'qii-taro',
-                      profileImageUrl: 'https://firebasestorage.googleapis.com/v0/b/gs-expansion-test.appspot.com/o/unknown_person.png?alt=media',
-                    ),
-                    createdAt: DateTime.now(),
-                    tags: ['Flutter', 'dart'],
-                    url: 'https://example.com',
-                  ),        ),
-                  ArticleContainer(article: Article(
-                    title: 'テスト',
-                    user: User(
-                      id: 'qii-taro',
-                      profileImageUrl: 'https://firebasestorage.googleapis.com/v0/b/gs-expansion-test.appspot.com/o/unknown_person.png?alt=media',
-                    ),
-                    createdAt: DateTime.now(),
-                    tags: ['Flutter', 'dart'],
-                    url: 'https://example.com',
-                  ),        ),
-                  ArticleContainer(article: Article(
-                    title: 'テスト',
-                    user: User(
-                      id: 'qii-taro',
-                      profileImageUrl: 'https://firebasestorage.googleapis.com/v0/b/gs-expansion-test.appspot.com/o/unknown_person.png?alt=media',
-                    ),
-                    createdAt: DateTime.now(),
-                    tags: ['Flutter', 'dart'],
-                    url: 'https://example.com',
-                  ),        ),
-                  ArticleContainer(article: Article(
-                    title: 'テスト',
-                    user: User(
-                      id: 'qii-taro',
-                      profileImageUrl: 'https://firebasestorage.googleapis.com/v0/b/gs-expansion-test.appspot.com/o/unknown_person.png?alt=media',
-                    ),
-                    createdAt: DateTime.now(),
-                    tags: ['Flutter', 'dart'],
-                    url: 'https://example.com',
-                  ),        ),
-                ],
+                children: articles
+                    .map((article) => ArticleContainer(article: article))
+                    .toList(),
               ),
             ),
           ]
