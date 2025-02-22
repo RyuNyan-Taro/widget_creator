@@ -9,109 +9,198 @@ class ArticleContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: _ArticlePadding.padding,
-      child: _ArticleMain(article: article),
+    return _Padding(
+      child: _Layout(
+        child: _Contents(article: article)
+      ),
     );
   }
 }
 
-class _ArticlePadding{
-  const _ArticlePadding();
+// Parts of ArticleContainer
+class _Padding extends StatelessWidget{
+  const _Padding({required this.child});
 
-  static const padding = EdgeInsets.symmetric(
-    vertical: 12,
-    horizontal: 16,
-  );
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: 12,
+          horizontal: 16,
+        ),
+        child: child
+    );
+  }
 }
 
-class _ArticleMain extends StatelessWidget {
-  const _ArticleMain({required this.article});
+class _Layout extends StatelessWidget {
+  const _Layout({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        padding: const EdgeInsets.symmetric(
+        horizontal: 20,
+        vertical: 16,
+    ),
+    height: 180,
+    decoration: const BoxDecoration(
+    color: Color(0xFF55C500), // ← 背景色を指定
+    borderRadius: BorderRadius.all(
+    Radius.circular(32), // ← 角丸を設定
+    ),
+    ),
+      child: child,
+    );
+  }
+}
+
+class _Contents extends StatelessWidget {
+  const _Contents({required this.article});
 
   final Article article;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 16,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _Date(createdAt: article.createdAt),
+        _Title(title: article.title),
+        _Tags(tags: article.tags),
+        _Footer(article: article),
+      ],
+    );
+  }
+}
+
+// Parts of _Contents
+class _Date extends StatelessWidget {
+  const _Date({required this.createdAt});
+
+  final DateTime createdAt;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      DateFormat('yyyy/MM/dd').format(createdAt),
+      style: const TextStyle(
+        color: Colors.white,
+        fontSize: 12,
       ),
-      height: 180,
-      decoration: const BoxDecoration(
-        color: Color(0xFF55C500), // ← 背景色を指定
-        borderRadius: BorderRadius.all(
-          Radius.circular(32), // ← 角丸を設定
+    );
+  }
+}
+
+class _Title extends StatelessWidget {
+  const _Title({required this.title});
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      title,
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+      style: const TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
+        color: Colors.white,
+      ),
+    );
+  }
+}
+
+class _Tags extends StatelessWidget {
+  const _Tags({required this.tags});
+
+  final List<String> tags;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      '#${tags.join(' #')}', // ←文字列の配列をjoinで結合
+      style: const TextStyle(
+        fontSize: 12,
+        color: Colors.white,
+        fontStyle: FontStyle.italic, // ←フォントスタイルを斜体に変更
+      ),
+    );
+  }
+}
+
+class _Footer extends StatelessWidget {
+  const _Footer({required this.article});
+
+  final Article article;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        _Likes(likesCount: article.likesCount),
+        _UserInformation(id: article.user.id, profileImageUrl: article.user.profileImageUrl),
+      ],
+    );
+  }
+}
+
+class _Likes extends StatelessWidget {
+  const _Likes({required this.likesCount});
+
+  final int likesCount;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const Icon(
+          Icons.favorite,
+          color: Colors.white,
         ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            DateFormat('yyyy/MM/dd').format(article.createdAt),
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-            ),
+        Text(
+          likesCount.toString(),
+          style: const TextStyle(
+            fontSize: 12,
+            color: Colors.white,
           ),
-          Text(
-            article.title,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
+        ),
+      ],
+    );
+  }
+}
+
+class _UserInformation extends StatelessWidget {
+  const _UserInformation({required this.id, required this.profileImageUrl});
+
+  final String id;
+  final String profileImageUrl;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        CircleAvatar(
+          radius: 26,
+          backgroundImage: NetworkImage(profileImageUrl),
+        ),
+        const SizedBox(height: 4),
+        Text(
+          id,
+          style: const TextStyle(
+            fontSize: 12,
+            color: Colors.white,
           ),
-          Text(
-            '#${article.tags.join(' #')}', // ←文字列の配列をjoinで結合
-            style: const TextStyle(
-              fontSize: 12,
-              color: Colors.white,
-              fontStyle: FontStyle.italic, // ←フォントスタイルを斜体に変更
-            ),
-          ),
-          Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-              Column(
-                children: [
-                  const Icon(
-                    Icons.favorite,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    article.likesCount.toString(),
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  CircleAvatar(
-                    radius: 26,
-                    backgroundImage: NetworkImage(article.user.profileImageUrl),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    article.user.id,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ]
-          )
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
