@@ -35,9 +35,8 @@ class _ApiResponseToUiState extends State<ApiResponseToUiPage> {
         appBar: AppBar(
           title: const Text('Api Response To Ui'),
         ),
-        body: ListView(
-          children:
-          [
+        body: Column(
+          children: <Widget>[
             Padding(
               padding: const EdgeInsets.symmetric(
                   vertical: 12,
@@ -45,14 +44,14 @@ class _ApiResponseToUiState extends State<ApiResponseToUiPage> {
               ),
               child: TextField(
                 style: const TextStyle(
-                  fontSize: 18,
-                  color: Colors.black
+                    fontSize: 18,
+                    color: Colors.black
                 ),
                 decoration: const InputDecoration(
                   hintText: '検索ワードを入力してください',
                   hintStyle: TextStyle(
-                    fontSize: 18,
-                    color: Colors.grey
+                      fontSize: 18,
+                      color: Colors.grey
                   ),
                 ),
                 onSubmitted: (String value) async {
@@ -61,66 +60,55 @@ class _ApiResponseToUiState extends State<ApiResponseToUiPage> {
                 },
               ),
             ),
-            ArticleContainer(article: Article(
-                title: 'テスト',
-                user: User(
-                id: 'qii-taro',
-                profileImageUrl: 'https://firebasestorage.googleapis.com/v0/b/gs-expansion-test.appspot.com/o/unknown_person.png?alt=media',
-                ),
-                createdAt: DateTime.now(),
-        tags: ['Flutter', 'dart'],
-        url: 'https://example.com',
-        ),        ),
-            ArticleContainer(article: Article(
-              title: 'テスト',
-              user: User(
-                id: 'qii-taro',
-                profileImageUrl: 'https://firebasestorage.googleapis.com/v0/b/gs-expansion-test.appspot.com/o/unknown_person.png?alt=media',
+            Expanded(
+              child: ListView(
+                // children: articles
+                //     .map((article) => ArticleContainer(article: article))
+                //     .toList(),
+                children: [
+                  ArticleContainer(article: Article(
+                    title: 'テスト',
+                    user: User(
+                      id: 'qii-taro',
+                      profileImageUrl: 'https://firebasestorage.googleapis.com/v0/b/gs-expansion-test.appspot.com/o/unknown_person.png?alt=media',
+                    ),
+                    createdAt: DateTime.now(),
+                    tags: ['Flutter', 'dart'],
+                    url: 'https://example.com',
+                  ),        ),
+                  ArticleContainer(article: Article(
+                    title: 'テスト',
+                    user: User(
+                      id: 'qii-taro',
+                      profileImageUrl: 'https://firebasestorage.googleapis.com/v0/b/gs-expansion-test.appspot.com/o/unknown_person.png?alt=media',
+                    ),
+                    createdAt: DateTime.now(),
+                    tags: ['Flutter', 'dart'],
+                    url: 'https://example.com',
+                  ),        ),
+                  ArticleContainer(article: Article(
+                    title: 'テスト',
+                    user: User(
+                      id: 'qii-taro',
+                      profileImageUrl: 'https://firebasestorage.googleapis.com/v0/b/gs-expansion-test.appspot.com/o/unknown_person.png?alt=media',
+                    ),
+                    createdAt: DateTime.now(),
+                    tags: ['Flutter', 'dart'],
+                    url: 'https://example.com',
+                  ),        ),
+                  ArticleContainer(article: Article(
+                    title: 'テスト',
+                    user: User(
+                      id: 'qii-taro',
+                      profileImageUrl: 'https://firebasestorage.googleapis.com/v0/b/gs-expansion-test.appspot.com/o/unknown_person.png?alt=media',
+                    ),
+                    createdAt: DateTime.now(),
+                    tags: ['Flutter', 'dart'],
+                    url: 'https://example.com',
+                  ),        ),
+                ],
               ),
-              createdAt: DateTime.now(),
-              tags: ['Flutter', 'dart'],
-              url: 'https://example.com',
-            ),        ),
-            ArticleContainer(article: Article(
-              title: 'テスト',
-              user: User(
-                id: 'qii-taro',
-                profileImageUrl: 'https://firebasestorage.googleapis.com/v0/b/gs-expansion-test.appspot.com/o/unknown_person.png?alt=media',
-              ),
-              createdAt: DateTime.now(),
-              tags: ['Flutter', 'dart'],
-              url: 'https://example.com',
-            ),        ),
-            ArticleContainer(article: Article(
-              title: 'テスト',
-              user: User(
-                id: 'qii-taro',
-                profileImageUrl: 'https://firebasestorage.googleapis.com/v0/b/gs-expansion-test.appspot.com/o/unknown_person.png?alt=media',
-              ),
-              createdAt: DateTime.now(),
-              tags: ['Flutter', 'dart'],
-              url: 'https://example.com',
-            ),        ),
-            ArticleContainer(article: Article(
-              title: 'テスト',
-              user: User(
-                id: 'qii-taro',
-                profileImageUrl: 'https://firebasestorage.googleapis.com/v0/b/gs-expansion-test.appspot.com/o/unknown_person.png?alt=media',
-              ),
-              createdAt: DateTime.now(),
-              tags: ['Flutter', 'dart'],
-              url: 'https://example.com',
-            ),        ),
-            ArticleContainer(article: Article(
-              title: 'テスト',
-              user: User(
-                id: 'qii-taro',
-                profileImageUrl: 'https://firebasestorage.googleapis.com/v0/b/gs-expansion-test.appspot.com/o/unknown_person.png?alt=media',
-              ),
-              createdAt: DateTime.now(),
-              tags: ['Flutter', 'dart'],
-              url: 'https://example.com',
-            ),        ),
+            ),
           ]
         )
       ),
