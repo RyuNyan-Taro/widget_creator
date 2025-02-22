@@ -26,7 +26,7 @@ class _ArticlePadding{
 }
 
 class _ArticleMain extends StatelessWidget {
-  const _ArticleMain({super.key, required this.article});
+  const _ArticleMain({required this.article});
 
   final Article article;
 
