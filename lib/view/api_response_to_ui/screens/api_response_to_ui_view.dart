@@ -5,7 +5,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:widget_creator/view/api_response_to_ui/models/article.dart';
-import 'package:widget_creator/view/api_response_to_ui/models/user.dart';
 import 'package:widget_creator/view/api_response_to_ui/widgets/article_container.dart';
 
 class ApiResponseToUiPage extends StatefulWidget {
