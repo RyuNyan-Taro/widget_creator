@@ -7,9 +7,15 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:widget_creator/view/api_response_to_ui/models/article.dart';
 import 'package:widget_creator/view/api_response_to_ui/widgets/article_container.dart';
 
-
-class ApiResponseToUiPage extends StatelessWidget {
+class ApiResponseToUiPage extends StatefulWidget {
   const ApiResponseToUiPage({super.key});
+
+  @override
+  State<ApiResponseToUiPage> createState() => _ApiResponseToUiState();
+
+}
+class _ApiResponseToUiState extends State<ApiResponseToUiPage> {
+  List<Article> articles = [];
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +54,9 @@ class ApiResponseToUiPage extends StatelessWidget {
                     color: Colors.grey
                   ),
                 ),
-                onSubmitted: (value) {
-                  print(value);
-                  // final articles = await searchQiita(value);
-                  // print(articles);
+                onSubmitted: (String value) async {
+                  final results = await searchQiita(value);
+                  setState(() => articles = results);
                 },
               ),
             ),

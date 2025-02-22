@@ -68,7 +68,7 @@ final List<_CardData> _cardDataList = [
   ),
   _CardData(
     text: 'API response to UI',
-    nextPage: () => const ApiResponseToUiPage(),
+    nextPage: () => ApiResponseToUiPage(),
   )
 ];
 
