@@ -5,6 +5,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:widget_creator/view/api_response_to_ui/models/article.dart';
+import 'package:widget_creator/view/api_response_to_ui/widgets/article_container.dart';
+
 
 class ApiResponseToUiPage extends StatelessWidget {
   const ApiResponseToUiPage({super.key});
@@ -26,9 +28,38 @@ class ApiResponseToUiPage extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Api Response To Ui'),
         ),
-        body: const Center(
-          child: Text('Hello, this is Api Response To Ui Page.'),
-        ),
+        body: Column(
+          children:
+          [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  vertical: 12,
+                  horizontal: 36
+              ),
+              child: TextField(
+                style: const TextStyle(
+                  fontSize: 18,
+                  color: Colors.black
+                ),
+                decoration: const InputDecoration(
+                  hintText: '検索ワードを入力してください',
+                  hintStyle: TextStyle(
+                    fontSize: 18,
+                    color: Colors.grey
+                  ),
+                ),
+                onSubmitted: (value) {
+                  print(value);
+                  // final articles = await searchQiita(value);
+                  // print(articles);
+                },
+              ),
+            ),
+            const Center(
+                child: ArticleContainer()
+            ),
+          ]
+        )
       ),
     );
   }
