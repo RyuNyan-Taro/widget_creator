@@ -7,12 +7,24 @@ class ApiResponseToUiPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Api Response To Ui'),
+    return Theme(
+      data: ThemeData(
+        primarySwatch: Colors.green,
+        fontFamily: 'Hiragino Sans',
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF55C500),
+        ),
+        textTheme: Theme.of(context).textTheme.apply(
+          bodyColor: Colors.white,
+        ),
       ),
-      body: const Center(
-        child: Text('Hello, this is Api Response To Ui Page.'),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Api Response To Ui'),
+        ),
+        body: const Center(
+          child: Text('Hello, this is Api Response To Ui Page.'),
+        ),
       ),
     );
   }
