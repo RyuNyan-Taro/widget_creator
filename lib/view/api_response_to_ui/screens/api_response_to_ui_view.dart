@@ -59,6 +59,8 @@ class _ApiResponseToUiState extends State<ApiResponseToUiPage> {
                 },
               ),
             ),
+
+            //todo: show message when result is zero.
             Expanded(
               child: ListView(
                 children: articles
