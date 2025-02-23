@@ -11,7 +11,7 @@ class ArticleContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return _Padding(
       child: _Layout(
-        child: _Contents(article: article)
+        child: _Content(article: article)
       ),
     );
   }
@@ -59,8 +59,8 @@ class _Layout extends StatelessWidget {
   }
 }
 
-class _Contents extends StatelessWidget {
-  const _Contents({required this.article});
+class _Content extends StatelessWidget {
+  const _Content({required this.article});
 
   final Article article;
 
@@ -79,7 +79,7 @@ class _Contents extends StatelessWidget {
   }
 }
 
-// Parts of _Contents
+// Parts of _Content
 class _Date extends StatelessWidget {
   const _Date({required this.createdAt});
 
