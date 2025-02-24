@@ -10,9 +10,7 @@ class ArticleContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _Padding(
-      child: _Layout(
-        child: _Content(article: article)
-      ),
+      child: _ArticleCard(article)
     );
   }
 }
@@ -31,6 +29,19 @@ class _Padding extends StatelessWidget{
           horizontal: 16,
         ),
         child: child
+    );
+  }
+}
+
+class _ArticleCard extends StatelessWidget{
+  const _ArticleCard(this.article);
+
+  final Article article;
+
+  @override
+  Widget build(BuildContext context) {
+    return _Layout(
+        child: _Content(article: article)
     );
   }
 }
