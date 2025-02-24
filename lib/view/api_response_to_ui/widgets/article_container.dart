@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:widget_creator/view/api_response_to_ui/models/article.dart';
+import 'package:widget_creator/view/api_response_to_ui/screens/article_screen.dart';
 
 class ArticleContainer extends StatelessWidget {
   const ArticleContainer({super.key, required this.article});
@@ -40,12 +41,22 @@ class _ArticleCard extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return _Layout(
-        child: _Content(article: article)
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ArticleScreen(article: article)),
+        );
+      },
+      child: _Layout(
+          child: _Content(article: article)
+      )
     );
   }
 }
 
+// Parts of _ArticleCard
 class _Layout extends StatelessWidget {
   const _Layout({required this.child});
 
