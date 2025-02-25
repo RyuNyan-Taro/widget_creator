@@ -71,10 +71,18 @@ class _Layout extends StatelessWidget {
     ),
     height: 180,
     decoration: const BoxDecoration(
-    color: Color(0xFF55C500), // ← 背景色を指定
-    borderRadius: BorderRadius.all(
-    Radius.circular(32), // ← 角丸を設定
-    ),
+      color: Color(0xFF55C500), // ← 背景色を指定
+      borderRadius: BorderRadius.all(
+      Radius.circular(32), // ← 角丸を設定
+      ),
+      boxShadow: [ // ← Add boxShadow here
+        BoxShadow(
+          color: Colors.grey, // ← Shadow color
+          spreadRadius: 2, // ← How far the shadow spreads
+          blurRadius: 5, // ← How blurry the shadow is
+          offset: Offset(0, 3), // ← Offset of the shadow (x, y)
+        ),
+      ],
     ),
       child: child,
     );
