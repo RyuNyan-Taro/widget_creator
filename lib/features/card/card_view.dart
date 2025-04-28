@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widget_creator/view/horizontal_and_vertical_view.dart';
+import 'package:widget_creator/features/horizontal_and_vertical_view/horizontal_and_vertical_view.dart';
 import 'package:widget_creator/view/square_tiles_view.dart';
 import 'package:widget_creator/features/has_sub_widget/has_sub_widget_view.dart';
 import 'package:widget_creator/features/api_response_to_ui/screens/api_response_to_ui_view.dart';
