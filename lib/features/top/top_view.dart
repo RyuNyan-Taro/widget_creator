@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widget_creator/view/card_view.dart';
+import 'package:widget_creator/features/card/card_view.dart';
 import 'package:widget_creator/view/second_view.dart';
 
 class TopPage extends StatelessWidget {
