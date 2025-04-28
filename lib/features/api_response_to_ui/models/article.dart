@@ -1,4 +1,4 @@
-import 'package:widget_creator/view/api_response_to_ui/models/user.dart';
+import 'package:widget_creator/features/api_response_to_ui/models/user.dart';
 
 class Article {
   Article ({

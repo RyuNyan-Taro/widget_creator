@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widget_creator/view/top_view.dart';
+import 'package:widget_creator/features/top/top_view.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {

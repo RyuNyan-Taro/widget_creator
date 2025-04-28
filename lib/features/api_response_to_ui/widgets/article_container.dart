@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:widget_creator/view/api_response_to_ui/models/article.dart';
-import 'package:widget_creator/view/api_response_to_ui/screens/article_screen.dart';
+import 'package:widget_creator/features/api_response_to_ui/models/article.dart';
+import 'package:widget_creator/features/api_response_to_ui/screens/article_screen.dart';
 
 class ArticleContainer extends StatelessWidget {
   const ArticleContainer({super.key, required this.article});
