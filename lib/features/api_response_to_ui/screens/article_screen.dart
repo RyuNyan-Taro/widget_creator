@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:widget_creator/view/api_response_to_ui/models/article.dart';
+import 'package:widget_creator/features/api_response_to_ui/models/article.dart';
 
 class ArticleScreen extends StatefulWidget {
   const ArticleScreen({
