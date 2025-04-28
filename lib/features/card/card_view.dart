@@ -3,6 +3,7 @@ import 'package:widget_creator/features/horizontal_and_vertical_view/horizontal_
 import 'package:widget_creator/features/square_tiles/square_tiles_view.dart';
 import 'package:widget_creator/features/has_sub_widget/has_sub_widget_view.dart';
 import 'package:widget_creator/features/api_response_to_ui/screens/api_response_to_ui_view.dart';
+import 'package:widget_creator/shared/dummy_view.dart';
 
 
 class CardPage extends StatelessWidget {
@@ -60,11 +61,11 @@ final List<_CardData> _cardDataList = [
   ),
   _CardData(
     text: 'Update with state',
-    nextPage: () => const _DummyPage(),
+    nextPage: () => const DummyPage(),
   ),
   _CardData(
     text: 'Action buttons',
-    nextPage: () => const _DummyPage(),
+    nextPage: () => const DummyPage(),
   ),
   _CardData(
     text: 'API response to UI',
@@ -108,22 +109,6 @@ class _TextCard extends StatelessWidget {
       },
       leading: Icon(Icons.person_2_rounded),
       title : Text(text)
-    );
-  }
-}
-
-class _DummyPage extends StatelessWidget {
-  const _DummyPage();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dummy Page'),
-      ),
-      body: const Center(
-        child: Text('It has been creating, please wait with relax.'),
-      ),
     );
   }
 }
