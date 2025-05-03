@@ -26,7 +26,6 @@ void main() {
   group('BlogService', () {
     test('fetchBlogPost returns BlogPost when http call completes successfully',
         () async {
-      // モックの応答データを準備
       final mockResponseData = {
         'id': 'test-id',
         'title': 'Test Title',
