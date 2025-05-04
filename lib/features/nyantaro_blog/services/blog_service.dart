@@ -1,8 +1,9 @@
 // blog_service.dart
 import 'dart:convert';
 import 'dart:math';
-import 'package:http/http.dart' as http;
+
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
 
 class BlogPost {
   final String id;
@@ -25,12 +26,18 @@ class BlogPost {
 }
 
 class BlogService {
-  static const String _baseUrl = 'https://nyantaroblog.microcms.io/api/v1/blogs';
-  final String _apiKey = dotenv.env['X_MICROCMS_API_KEY'] ?? '';
+  static const String _baseUrl =
+      'https://nyantaroblog.microcms.io/api/v1/blogs';
+  final String _apiKey;
   final http.Client _client;
 
-  BlogService({http.Client? client}) : _client = client ?? http.Client();
-
+  BlogService({String? apiKey, http.Client? client})
+      : _apiKey = apiKey ?? dotenv.env['MICROCMS_API_KEY'] ?? '',
+        _client = client ?? http.Client() {
+    if (_apiKey.isEmpty) {
+      throw Exception('MICROCMS_API_KEY is not set in .env file');
+    }
+  }
 
   Future<BlogPost?> fetchBlogPost(String postId) async {
     try {
@@ -48,7 +55,6 @@ class BlogService {
       final post = json.decode(response.body);
 
       return _convertJsonPost(post);
-
     } catch (error) {
       print('Error fetching blog post $postId: $error');
       return null;
@@ -81,23 +87,26 @@ class BlogService {
   }
 
   BlogPost _convertJsonPost(final post) {
-
     final content = post['content'] as String?;
     if (content == null || content.isEmpty) {
-      throw Exception('Failed to find content in the post, because of the post has null content.');
+      throw Exception(
+          'Failed to find content in the post, because of the post has null content.');
     }
 
     // HTML タグを削除して160文字に制限する正規表現
     final description = post['content']
-        .replaceAll(RegExp(r'<[^>]*>'), '')
-        .substring(0, min(160, content.length)) + '...';
+            .replaceAll(RegExp(r'<[^>]*>'), '')
+            .substring(0, min(160, content.length)) +
+        '...';
 
     return BlogPost(
       id: post['id'],
       title: post['title'],
       description: description,
       content: post['content'],
-      date: DateTime.parse(post['publishedAt']).toString().split(' ')[0], // YYYY-MM-DD形式
+      date: DateTime.parse(post['publishedAt'])
+          .toString()
+          .split(' ')[0], // YYYY-MM-DD形式
       readTime: '${(post['content'].length / 500).ceil()} min read',
       slug: post['id'],
     );

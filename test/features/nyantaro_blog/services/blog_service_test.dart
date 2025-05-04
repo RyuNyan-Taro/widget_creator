@@ -1,7 +1,6 @@
 // test/blog_service_test.dart
 import 'dart:convert';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
@@ -14,13 +13,12 @@ void main() {
   late MockHttpClient mockHttpClient;
 
   setUpAll(() async {
-    await dotenv.load(fileName: '.env');
     registerFallbackValue(Uri.parse('https://example.com'));
   });
 
   setUp(() {
     mockHttpClient = MockHttpClient();
-    blogService = BlogService(client: mockHttpClient);
+    blogService = BlogService(apiKey: "dummyKey", client: mockHttpClient);
   });
 
   group('BlogService', () {
