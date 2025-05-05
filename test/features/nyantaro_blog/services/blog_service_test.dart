@@ -64,6 +64,66 @@ void main() {
     });
   });
 
-  group('fetchBlogPosts', () {});
-  // todo: fetchBlogPosts のテストも同様に追加...
+  group('fetchBlogPosts', () {
+    test('It returns list of BlogPost when http call completes successfully',
+        () async {
+      final mockResponseData = {
+        'contents': [
+          {
+            'id': 'test-id',
+            'title': 'Test Title',
+            'content': 'Test content with some text that is long enough',
+            'publishedAt': '2024-03-20T00:00:00Z'
+          },
+          {
+            'id': 'test-id2',
+            'title': 'Test Title2',
+            'content': 'It is very strong points for future',
+            'publishedAt': '2025-03-21T00:00:00Z'
+          },
+        ]
+      };
+
+      when(() => mockHttpClient.get(
+            any<Uri>(),
+            headers: any(named: 'headers'),
+          )).thenAnswer((_) async => http.Response(
+            json.encode(mockResponseData),
+            200,
+          ));
+
+      final results = await blogService.fetchBlogPosts();
+
+      List<BlogPost> expects = [
+        BlogPost(
+            id: 'test-id',
+            title: 'Test Title',
+            description: 'Test content with some text that is long enough...',
+            content: 'Test content with some text that is long enough',
+            date: '2024-03-20',
+            readTime: '1 min read',
+            slug: 'test-id'),
+        BlogPost(
+            id: 'test-id2',
+            title: 'Test Title2',
+            description: 'It is very strong points for future...',
+            content: 'It is very strong points for future',
+            date: '2025-03-21',
+            readTime: '1 min read',
+            slug: 'test-id2')
+      ];
+
+      for (final (index, result) in results.indexed) {
+        final expected = expects[index];
+        expect(result, isNotNull);
+        expect(result.id, equals(expected.id));
+        expect(result.title, equals(expected.title));
+        expect(result.description, equals(expected.description));
+        expect(result.content, equals(expected.content));
+        expect(result.date, equals(expected.date));
+        expect(result.readTime, equals(expected.readTime));
+        expect(result.slug, equals(expected.slug));
+      }
+    });
+  });
 }
