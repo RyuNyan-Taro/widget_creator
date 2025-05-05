@@ -49,7 +49,7 @@ void main() {
           equals('Test content with some text that is long enough'));
       expect(result?.date, equals('2024-03-20'));
       expect(result?.readTime, equals('1 min read'));
-      expect(result?.id, equals('test-id'));
+      expect(result?.slug, equals('test-id'));
     });
 
     test('It returns null when http call fails', () async {
