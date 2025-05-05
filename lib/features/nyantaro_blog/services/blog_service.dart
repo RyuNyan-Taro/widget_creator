@@ -63,7 +63,7 @@ class BlogService {
 
   Future<List<BlogPost>> fetchBlogPosts() async {
     try {
-      final response = await http.get(
+      final response = await _client.get(
         Uri.parse(_baseUrl),
         headers: {
           'X-MICROCMS-API-KEY': _apiKey,
