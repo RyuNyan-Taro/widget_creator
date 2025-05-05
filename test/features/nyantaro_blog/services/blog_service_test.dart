@@ -44,6 +44,13 @@ void main() {
       expect(result, isNotNull);
       expect(result?.id, equals('test-id'));
       expect(result?.title, equals('Test Title'));
+      expect(result?.description,
+          equals('Test content with some text that is long enough...'));
+      expect(result?.content,
+          equals('Test content with some text that is long enough'));
+      expect(result?.date, equals('2024-03-20'));
+      expect(result?.readTime, equals('1 min read'));
+      expect(result?.id, equals('test-id'));
     });
 
     test('fetchBlogPost returns null when http call fails', () async {
