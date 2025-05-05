@@ -21,9 +21,8 @@ void main() {
     blogService = BlogService(apiKey: "dummyKey", client: mockHttpClient);
   });
 
-  group('BlogService', () {
-    test('fetchBlogPost returns BlogPost when http call completes successfully',
-        () async {
+  group('fetchBlogPost', () {
+    test('It returns BlogPost when http call completes successfully', () async {
       final mockResponseData = {
         'id': 'test-id',
         'title': 'Test Title',
@@ -53,7 +52,7 @@ void main() {
       expect(result?.id, equals('test-id'));
     });
 
-    test('fetchBlogPost returns null when http call fails', () async {
+    test('It returns null when http call fails', () async {
       when(() => mockHttpClient.get(
             any(),
             headers: any(named: 'headers'),
@@ -63,7 +62,8 @@ void main() {
 
       expect(result, isNull);
     });
-
-    // todo: fetchBlogPosts のテストも同様に追加...
   });
+
+  group('fetchBlogPosts', () {});
+  // todo: fetchBlogPosts のテストも同様に追加...
 }
