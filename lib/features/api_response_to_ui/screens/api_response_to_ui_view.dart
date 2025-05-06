@@ -64,6 +64,7 @@ class _ApiResponseToUiState extends State<ApiResponseToUiPage> {
             Expanded(
               child: ListView(
                 children: articles
+                    //todo: change to use shared link_screen as tupped page
                     .map((article) => ArticleContainer(article: article))
                     .toList(),
               ),
