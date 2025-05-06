@@ -15,10 +15,6 @@ class _LinkScreenState extends State<LinkScreen> {
     ..loadRequest(Uri.parse(widget.url));
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Article Page'),
-        ),
-        body: WebViewWidget(controller: controller));
+    return Scaffold(body: WebViewWidget(controller: controller));
   }
 }
