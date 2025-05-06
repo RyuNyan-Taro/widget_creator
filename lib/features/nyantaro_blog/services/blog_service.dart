@@ -56,7 +56,6 @@ class BlogService {
 
       return _convertJsonPost(post);
     } catch (error) {
-      print('Error fetching blog post $postId: $error');
       return null;
     }
   }
@@ -81,7 +80,6 @@ class BlogService {
         return _convertJsonPost(post);
       }).toList();
     } catch (error) {
-      print('Error fetching blog posts: $error');
       return [];
     }
   }
