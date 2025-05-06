@@ -75,8 +75,7 @@ class _BlogPostListView extends StatelessWidget {
         final post = blogPosts[index];
         return BlogPostCard(
           post: post,
-          onTapBuilder: (context, post) =>
-              BlogDetailScreen(blogId: post.id, title: post.title),
+          onTapBuilder: (context, post) => BlogDetailScreen(post: post),
         );
       },
     );
