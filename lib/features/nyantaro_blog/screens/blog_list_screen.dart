@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widget_creator/features/nyantaro_blog/model/post.dart';
 import 'package:widget_creator/features/nyantaro_blog/screens/blog_detail_screen.dart';
 import 'package:widget_creator/features/nyantaro_blog/services/blog_service.dart';
 import 'package:widget_creator/features/nyantaro_blog/widgets/blog_post_card.dart';

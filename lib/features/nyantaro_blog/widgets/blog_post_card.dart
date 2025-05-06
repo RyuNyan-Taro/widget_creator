@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widget_creator/features/nyantaro_blog/services/blog_service.dart';
+import 'package:widget_creator/features/nyantaro_blog/model/post.dart';
 
 class BlogPostCard extends StatelessWidget {
   final BlogPost post;
