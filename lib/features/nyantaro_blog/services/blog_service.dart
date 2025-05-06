@@ -32,7 +32,7 @@ class BlogService {
   final http.Client _client;
 
   BlogService({String? apiKey, http.Client? client})
-      : _apiKey = apiKey ?? dotenv.env['MICROCMS_API_KEY'] ?? '',
+      : _apiKey = apiKey ?? dotenv.env['X_MICROCMS_API_KEY'] ?? '',
         _client = client ?? http.Client() {
     if (_apiKey.isEmpty) {
       throw Exception('MICROCMS_API_KEY is not set in .env file');
