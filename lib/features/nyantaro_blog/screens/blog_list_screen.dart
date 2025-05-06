@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widget_creator/features/nyantaro_blog/screens/blog_detail_screen.dart';
 import 'package:widget_creator/features/nyantaro_blog/services/blog_service.dart';
 
 class BlogListScreen extends StatefulWidget {
@@ -62,7 +63,6 @@ class _BlogPostListView extends StatelessWidget {
   final List<BlogPost> blogPosts;
 
   const _BlogPostListView({
-    super.key,
     required this.blogPosts,
   });
 
@@ -82,9 +82,19 @@ class _BlogPostCard extends StatelessWidget {
   final BlogPost post;
 
   const _BlogPostCard({
-    super.key,
     required this.post,
   });
+
+  void _navigateToBlogDetail(BuildContext context) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => BlogDetailScreen(
+          blogId: post.id,
+          title: post.title,
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,9 +117,7 @@ class _BlogPostCard extends StatelessWidget {
             _BlogPostMetadata(date: post.date, readTime: post.readTime),
           ],
         ),
-        onTap: () {
-          // TODO: ブログ投稿の詳細画面に遷移する処理を追加
-        },
+        onTap: () => _navigateToBlogDetail(context),
       ),
     );
   }
@@ -120,7 +128,6 @@ class _BlogPostMetadata extends StatelessWidget {
   final String readTime;
 
   const _BlogPostMetadata({
-    super.key,
     required this.date,
     required this.readTime,
   });
