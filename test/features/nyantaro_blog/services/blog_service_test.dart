@@ -125,5 +125,15 @@ void main() {
         expect(result.slug, equals(expected.slug));
       }
     });
+    test('It returns null list when http call fails', () async {
+      when(() => mockHttpClient.get(
+            any(),
+            headers: any(named: 'headers'),
+          )).thenAnswer((_) async => http.Response('Not Found', 404));
+
+      final result = await blogService.fetchBlogPosts();
+
+      expect(result, []);
+    });
   });
 }
