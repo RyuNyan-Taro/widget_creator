@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:widget_creator/features/nyantaro_blog/screens/blog_detail_screen.dart';
 import 'package:widget_creator/features/nyantaro_blog/services/blog_service.dart';
 import 'package:widget_creator/features/nyantaro_blog/widgets/blog_post_card.dart';
 
@@ -72,7 +73,11 @@ class _BlogPostListView extends StatelessWidget {
       itemCount: blogPosts.length,
       itemBuilder: (context, index) {
         final post = blogPosts[index];
-        return BlogPostCard(post: post);
+        return BlogPostCard(
+          post: post,
+          onTapBuilder: (context, post) =>
+              BlogDetailScreen(blogId: post.id, title: post.title),
+        );
       },
     );
   }

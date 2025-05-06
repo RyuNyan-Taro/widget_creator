@@ -1,22 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:widget_creator/features/nyantaro_blog/screens/blog_detail_screen.dart';
 import 'package:widget_creator/features/nyantaro_blog/services/blog_service.dart';
 
 class BlogPostCard extends StatelessWidget {
   final BlogPost post;
+  final Widget Function(BuildContext, BlogPost) onTapBuilder;
 
-  const BlogPostCard({
-    super.key,
-    required this.post,
-  });
+  const BlogPostCard(
+      {super.key, required this.post, required this.onTapBuilder});
 
-  void _navigateToBlogDetail(BuildContext context) {
+  void _navigateToTapBuilder(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => BlogDetailScreen(
-          blogId: post.id,
-          title: post.title,
-        ),
+        builder: (context) => onTapBuilder(context, post),
       ),
     );
   }
@@ -42,7 +37,7 @@ class BlogPostCard extends StatelessWidget {
             _BlogPostMetadata(date: post.date, readTime: post.readTime),
           ],
         ),
-        onTap: () => _navigateToBlogDetail(context),
+        onTap: () => _navigateToTapBuilder(context),
       ),
     );
   }
