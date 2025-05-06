@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:widget_creator/features/nyantaro_blog/services/blog_service.dart';
 
 class BlogDetailScreen extends StatefulWidget {
@@ -101,8 +102,11 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                   },
                   onLinkTap: (String? url, _, __) {
                     if (url != null) {
-                      // URLを開く処理を実装
-                      // 例: url_launcher パッケージを使用してブラウザで開く
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => LinkScreen(url: url)),
+                      );
                     }
                   },
                 ),
@@ -112,5 +116,27 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
         },
       ),
     );
+  }
+}
+
+class LinkScreen extends StatefulWidget {
+  const LinkScreen({super.key, required this.url});
+
+  final String url;
+
+  @override
+  State<LinkScreen> createState() => _LinkScreenState();
+}
+
+class _LinkScreenState extends State<LinkScreen> {
+  late WebViewController controller = WebViewController()
+    ..loadRequest(Uri.parse(widget.url));
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Article Page'),
+        ),
+        body: WebViewWidget(controller: controller));
   }
 }
