@@ -26,63 +26,113 @@ class _BlogListScreenState extends State<BlogListScreen> {
       ),
       body: FutureBuilder<List<BlogPost>>(
         future: _blogPosts,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+        builder: _buildBlogPostList,
+      ),
+    );
+  }
+}
 
-          if (snapshot.hasError) {
-            return Center(
-              child: Text('Error: ${snapshot.error}'),
-            );
-          }
+// internal sub widgets
+Widget _buildBlogPostList(
+  BuildContext context,
+  AsyncSnapshot<List<BlogPost>> snapshot,
+) {
+  if (snapshot.connectionState == ConnectionState.waiting) {
+    return const Center(
+      child: CircularProgressIndicator(),
+    );
+  }
 
-          if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Center(
-              child: Text('No blog posts available'),
-            );
-          }
+  if (snapshot.hasError) {
+    return Center(
+      child: Text('Error: ${snapshot.error}'),
+    );
+  }
 
-          return ListView.builder(
-            itemCount: snapshot.data!.length,
-            itemBuilder: (context, index) {
-              final post = snapshot.data![index];
-              return Card(
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 16.0,
-                  vertical: 8.0,
-                ),
-                child: ListTile(
-                  title: Text(
-                    post.title,
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 8),
-                      Text(post.description),
-                      const SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Text(post.date),
-                          const SizedBox(width: 16),
-                          Text(post.readTime),
-                        ],
-                      ),
-                    ],
-                  ),
-                  onTap: () {
-                    // TODO: ブログ投稿の詳細画面に遷移する処理を追加
-                  },
-                ),
-              );
-            },
-          );
+  if (!snapshot.hasData || snapshot.data!.isEmpty) {
+    return const Center(
+      child: Text('No blog posts available'),
+    );
+  }
+
+  return _BlogPostListView(blogPosts: snapshot.data!);
+}
+
+class _BlogPostListView extends StatelessWidget {
+  final List<BlogPost> blogPosts;
+
+  const _BlogPostListView({
+    super.key,
+    required this.blogPosts,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: blogPosts.length,
+      itemBuilder: (context, index) {
+        final post = blogPosts[index];
+        return _BlogPostCard(post: post);
+      },
+    );
+  }
+}
+
+class _BlogPostCard extends StatelessWidget {
+  final BlogPost post;
+
+  const _BlogPostCard({
+    super.key,
+    required this.post,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: const EdgeInsets.symmetric(
+        horizontal: 16.0,
+        vertical: 8.0,
+      ),
+      child: ListTile(
+        title: Text(
+          post.title,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 8),
+            Text(post.description),
+            const SizedBox(height: 8),
+            _BlogPostMetadata(date: post.date, readTime: post.readTime),
+          ],
+        ),
+        onTap: () {
+          // TODO: ブログ投稿の詳細画面に遷移する処理を追加
         },
       ),
+    );
+  }
+}
+
+class _BlogPostMetadata extends StatelessWidget {
+  final String date;
+  final String readTime;
+
+  const _BlogPostMetadata({
+    super.key,
+    required this.date,
+    required this.readTime,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Text(date),
+        const SizedBox(width: 16),
+        Text(readTime),
+      ],
     );
   }
 }
