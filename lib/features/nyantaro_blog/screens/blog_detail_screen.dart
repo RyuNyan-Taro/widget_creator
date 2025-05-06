@@ -55,65 +55,75 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
           }
 
           final post = snapshot.data!;
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  post.title,
-                  style: Theme.of(context).textTheme.headlineMedium,
-                ),
-                const SizedBox(height: 8),
-                // Note: contentにはHTMLが含まれている可能性があるため、
-                // 実際のアプリケーションではflutter_html等のパッケージを使用して
-                // HTMLをレンダリングすることを推奨します
-                Html(
-                  data: post.content,
-                  style: {
-                    "body": Style(
-                      fontSize: FontSize(16),
-                      lineHeight: LineHeight(1.8),
-                    ),
-                    "p": Style(
-                      margin: Margins(top: Margin(2)),
-                    ),
-                    "h1": Style(
-                      fontSize: FontSize(24),
-                      margin: Margins(top: Margin(16)),
-                    ),
-                    "h2": Style(
-                      fontSize: FontSize(20),
-                      margin: Margins(top: Margin(12)),
-                    ),
-                    "img": Style(
-                      width: Width(double.infinity),
-                      backgroundColor: Colors.grey[200],
-                    ),
-                    "pre": Style(
-                      backgroundColor: Colors.grey[100],
-                      padding: HtmlPaddings(top: HtmlPadding(8)),
-                      margin: Margins(top: Margin(8)),
-                    ),
-                    "code": Style(
-                      backgroundColor: Colors.grey[100],
-                      fontFamily: "monospace",
-                    ),
-                  },
-                  onLinkTap: (String? url, _, __) {
-                    if (url != null) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => LinkScreen(url: url)),
-                      );
-                    }
-                  },
-                ),
-              ],
-            ),
-          );
+          return _PostView(post: post);
         },
+      ),
+    );
+  }
+}
+
+class _PostView extends StatelessWidget {
+  final BlogPost post;
+
+  const _PostView({required this.post});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            post.title,
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
+          const SizedBox(height: 8),
+          // Note: contentにはHTMLが含まれている可能性があるため、
+          // 実際のアプリケーションではflutter_html等のパッケージを使用して
+          // HTMLをレンダリングすることを推奨します
+          Html(
+            data: post.content,
+            style: {
+              "body": Style(
+                fontSize: FontSize(16),
+                lineHeight: LineHeight(1.8),
+              ),
+              "p": Style(
+                margin: Margins(top: Margin(2)),
+              ),
+              "h1": Style(
+                fontSize: FontSize(24),
+                margin: Margins(top: Margin(16)),
+              ),
+              "h2": Style(
+                fontSize: FontSize(20),
+                margin: Margins(top: Margin(12)),
+              ),
+              "img": Style(
+                width: Width(double.infinity),
+                backgroundColor: Colors.grey[200],
+              ),
+              "pre": Style(
+                backgroundColor: Colors.grey[100],
+                padding: HtmlPaddings(top: HtmlPadding(8)),
+                margin: Margins(top: Margin(8)),
+              ),
+              "code": Style(
+                backgroundColor: Colors.grey[100],
+                fontFamily: "monospace",
+              ),
+            },
+            onLinkTap: (String? url, _, __) {
+              if (url != null) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => LinkScreen(url: url)),
+                );
+              }
+            },
+          ),
+        ],
       ),
     );
   }
