@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:widget_creator/features/api_response_to_ui/models/article.dart';
-import 'package:widget_creator/features/api_response_to_ui/screens/article_screen.dart';
+import 'package:widget_creator/shared/link_screen.dart';
 
 class ArticleContainer extends StatelessWidget {
   const ArticleContainer({super.key, required this.article});
@@ -10,14 +10,12 @@ class ArticleContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _Padding(
-      child: _ArticleCard(article)
-    );
+    return _Padding(child: _ArticleCard(article));
   }
 }
 
 // Parts of ArticleContainer
-class _Padding extends StatelessWidget{
+class _Padding extends StatelessWidget {
   const _Padding({required this.child});
 
   final Widget child;
@@ -29,12 +27,11 @@ class _Padding extends StatelessWidget{
           vertical: 12,
           horizontal: 16,
         ),
-        child: child
-    );
+        child: child);
   }
 }
 
-class _ArticleCard extends StatelessWidget{
+class _ArticleCard extends StatelessWidget {
   const _ArticleCard(this.article);
 
   final Article article;
@@ -42,17 +39,14 @@ class _ArticleCard extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ArticleScreen(article: article)),
-        );
-      },
-      child: _Layout(
-          child: _Content(article: article)
-      )
-    );
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => LinkScreen(url: article.url)),
+          );
+        },
+        child: _Layout(child: _Content(article: article)));
   }
 }
 
@@ -65,25 +59,26 @@ class _Layout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.symmetric(
+      padding: const EdgeInsets.symmetric(
         horizontal: 20,
         vertical: 12,
-    ),
-    height: 180,
-    decoration: const BoxDecoration(
-      color: Color(0xFF55C500), // ← 背景色を指定
-      borderRadius: BorderRadius.all(
-      Radius.circular(32), // ← 角丸を設定
       ),
-      boxShadow: [ // ← Add boxShadow here
-        BoxShadow(
-          color: Colors.grey, // ← Shadow color
-          spreadRadius: 2, // ← How far the shadow spreads
-          blurRadius: 5, // ← How blurry the shadow is
-          offset: Offset(0, 3), // ← Offset of the shadow (x, y)
+      height: 180,
+      decoration: const BoxDecoration(
+        color: Color(0xFF55C500), // ← 背景色を指定
+        borderRadius: BorderRadius.all(
+          Radius.circular(32), // ← 角丸を設定
         ),
-      ],
-    ),
+        boxShadow: [
+          // ← Add boxShadow here
+          BoxShadow(
+            color: Colors.grey, // ← Shadow color
+            spreadRadius: 2, // ← How far the shadow spreads
+            blurRadius: 5, // ← How blurry the shadow is
+            offset: Offset(0, 3), // ← Offset of the shadow (x, y)
+          ),
+        ],
+      ),
       child: child,
     );
   }
@@ -179,7 +174,8 @@ class _Footer extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         _Likes(likesCount: article.likesCount),
-        _UserInformation(id: article.user.id, profileImageUrl: article.user.profileImageUrl),
+        _UserInformation(
+            id: article.user.id, profileImageUrl: article.user.profileImageUrl),
       ],
     );
   }
