@@ -94,7 +94,7 @@ class BlogService {
     // HTML タグを削除して160文字に制限する正規表現
     final description = post['content']
             .replaceAll(RegExp(r'<[^>]*>'), '')
-            .substring(0, min(160, content.length)) +
+            .substring(0, min(40, content.length)) +
         '...';
 
     return BlogPost(
