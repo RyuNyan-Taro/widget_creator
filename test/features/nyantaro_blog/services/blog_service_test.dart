@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
+import 'package:widget_creator/features/nyantaro_blog/model/post.dart';
 import 'package:widget_creator/features/nyantaro_blog/services/blog_service.dart';
 
 class MockHttpClient extends Mock implements http.Client {}
@@ -44,7 +45,7 @@ void main() {
       expect(result?.id, equals('test-id'));
       expect(result?.title, equals('Test Title'));
       expect(result?.description,
-          equals('Test content with some text that is long enough...'));
+          equals('Test content with some text that is long...'));
       expect(result?.content,
           equals('Test content with some text that is long enough'));
       expect(result?.date, equals('2024-03-20'));
@@ -98,7 +99,7 @@ void main() {
         BlogPost(
             id: 'test-id',
             title: 'Test Title',
-            description: 'Test content with some text that is long enough...',
+            description: 'Test content with some text that is long...',
             content: 'Test content with some text that is long enough',
             date: '2024-03-20',
             readTime: '1 min read',
