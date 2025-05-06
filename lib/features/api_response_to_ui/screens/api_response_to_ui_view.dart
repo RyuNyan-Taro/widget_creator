@@ -1,9 +1,10 @@
 // ref: https://zenn.dev/heyhey1028/books/flutter-basics/viewer/hands_on_intro
 
-import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:http/http.dart' as http;
 import 'package:widget_creator/features/api_response_to_ui/models/article.dart';
 import 'package:widget_creator/features/api_response_to_ui/widgets/article_container.dart';
 
@@ -12,8 +13,8 @@ class ApiResponseToUiPage extends StatefulWidget {
 
   @override
   State<ApiResponseToUiPage> createState() => _ApiResponseToUiState();
-
 }
+
 class _ApiResponseToUiState extends State<ApiResponseToUiPage> {
   List<Article> articles = [];
 
@@ -27,31 +28,21 @@ class _ApiResponseToUiState extends State<ApiResponseToUiPage> {
           backgroundColor: Color(0xFF55C500),
         ),
         textTheme: Theme.of(context).textTheme.apply(
-          bodyColor: Colors.white,
-        ),
+              bodyColor: Colors.white,
+            ),
       ),
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Api Response To Ui'),
-        ),
-        body: Column(
-          children: <Widget>[
+          appBar: AppBar(
+            title: const Text('Api Response To Ui'),
+          ),
+          body: Column(children: <Widget>[
             Padding(
-              padding: const EdgeInsets.symmetric(
-                  vertical: 12,
-                  horizontal: 36
-              ),
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 36),
               child: TextField(
-                style: const TextStyle(
-                    fontSize: 18,
-                    color: Colors.black
-                ),
+                style: const TextStyle(fontSize: 18, color: Colors.black),
                 decoration: const InputDecoration(
                   hintText: '検索ワードを入力してください',
-                  hintStyle: TextStyle(
-                      fontSize: 18,
-                      color: Colors.grey
-                  ),
+                  hintStyle: TextStyle(fontSize: 18, color: Colors.grey),
                 ),
                 onSubmitted: (String value) async {
                   final results = await searchQiita(value);
@@ -64,22 +55,18 @@ class _ApiResponseToUiState extends State<ApiResponseToUiPage> {
             Expanded(
               child: ListView(
                 children: articles
+                    //todo: change to use shared link_screen as tupped page
                     .map((article) => ArticleContainer(article: article))
                     .toList(),
               ),
             ),
-          ]
-        )
-      ),
+          ])),
     );
   }
 
   Future<List<Article>> searchQiita(String keyword) async {
-
-    final uri = Uri.https('qiita.com', '/api/v2/items', {
-      'query': 'title:$keyword',
-      'per_page': '10'
-    });
+    final uri = Uri.https('qiita.com', '/api/v2/items',
+        {'query': 'title:$keyword', 'per_page': '10'});
     final String token = dotenv.env['QIITA_ACCESS_TOKEN'] ?? '';
 
     final http.Response res = await http.get(uri, headers: {

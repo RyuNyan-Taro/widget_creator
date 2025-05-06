@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:widget_creator/features/card/card_view.dart';
 import 'package:widget_creator/shared/dummy_view.dart';
+import 'package:widget_creator/features/nyantaro_blog/screens/blog_list_screen.dart';
 
 class TopPage extends StatelessWidget {
   const TopPage({super.key, required this.title});
@@ -22,7 +23,7 @@ class TopPage extends StatelessWidget {
             spacing: 20,
             children: <Widget>[
               _NavigateText(text: 'Cards', nextPage: () => const CardPage()),
-              _NavigateText(text: 'Text 2', nextPage: () => const DummyPage()),
+              _NavigateText(text: 'Blog', nextPage: () => const BlogListScreen()),
               _NavigateText(text: 'Text 3', nextPage: () => const DummyPage()),
             ],
           ),
