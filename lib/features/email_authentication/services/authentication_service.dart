@@ -23,15 +23,9 @@ class AuthService {
 
   Future<AuthResponse> loginWithPassword(
       {required String email, required String password}) async {
-    try {
-      return await _supabase.auth.signInWithPassword(
-        email: email,
-        password: password,
-      );
-    } on AuthException catch (error) {
-      throw Exception('authentication error: ${error.message}');
-    } on Exception catch (error) {
-      throw Exception('some thing is wrong in authentication: $error');
-    }
+    return await _supabase.auth.signInWithPassword(
+      email: email,
+      password: password,
+    );
   }
 }
