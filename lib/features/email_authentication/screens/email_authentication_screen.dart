@@ -63,6 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                     ? const CircularProgressIndicator()
                     : const Text('Login'),
                 onPressed: () async {
+                  //todo: add login error popup
                   if (_formKey.currentState!.validate()) {
                     final response = await authClient.loginWithPassword(
                       email: _emailController.text,
@@ -81,6 +82,8 @@ class _LoginPageState extends State<LoginPage> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
+                      // todo: create sign up page
+                      // todo: create password reset page
                       builder: (context) => const DummyPage(),
                     ),
                   );
