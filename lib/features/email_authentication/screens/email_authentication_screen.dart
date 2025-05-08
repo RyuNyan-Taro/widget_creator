@@ -64,6 +64,10 @@ class _LoginPageState extends State<LoginPage> {
                     : const Text('Login'),
                 onPressed: () async {
                   //todo: add login error popup
+                  // 1. Email not confirmed
+                  // Error: AuthApiException(message: Email not confirmed, statusCode: 400, code: email_not_confirmed)
+                  // 2. Invalid login credentials
+                  // Error: AuthApiException(message: Invalid login credentials, statusCode: 400, code: invalid_credentials)
                   if (_formKey.currentState!.validate()) {
                     final response = await authClient.loginWithPassword(
                       email: _emailController.text,
