@@ -28,4 +28,8 @@ class AuthService {
       password: password,
     );
   }
+
+  Future<void> resetPasswordWithEmail({required String email}) async {
+    return await _supabase.auth.resetPasswordForEmail(email);
+  }
 }

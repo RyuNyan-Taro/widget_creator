@@ -1,6 +1,7 @@
 // ref: https://github.com/heyhey1028/flutter_supabase_auth/blob/main/lib/pages/login_page.dart
 
 import 'package:flutter/material.dart';
+import 'package:widget_creator/features/email_authentication/screens/reset_password_screen.dart';
 import 'package:widget_creator/features/email_authentication/screens/signup_screen.dart';
 import 'package:widget_creator/features/email_authentication/services/authentication_service.dart';
 
@@ -88,6 +89,17 @@ class _LoginPageState extends State<LoginPage> {
                     MaterialPageRoute(
                       // todo: create password reset page
                       builder: (context) => const SignUpPage(),
+                    ),
+                  );
+                },
+              ),
+              TextButton(
+                child: const Text('Do you forget password?'),
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ResetPasswordPage(),
                     ),
                   );
                 },
