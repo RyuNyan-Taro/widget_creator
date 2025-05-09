@@ -55,6 +55,28 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                     await authClient.resetPasswordWithEmail(
                       email: _emailController.text,
                     );
+                    if (!mounted) return;
+                    print('fin with clear');
+                    await showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Success'),
+                          content: const Text(
+                              'Password reset email has been sent if it is collect.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('OK'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                    if (!mounted) return;
+                    Navigator.of(context).pop();
                   }
                 },
               ),
