@@ -64,32 +64,14 @@ class _LoginPageState extends State<LoginPage> {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             children: <Widget>[
-              TextFormField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _passwordController,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                ),
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
-              ),
+              _ValidateForm(
+                  controller: _emailController,
+                  formLabel: 'Email',
+                  validateText: 'Please enter your email'),
+              _ValidateForm(
+                  controller: _passwordController,
+                  formLabel: 'Password',
+                  validateText: 'Please enter your password'),
               const SizedBox(height: 12.0),
               ElevatedButton(
                 child: isLoading
@@ -97,28 +79,12 @@ class _LoginPageState extends State<LoginPage> {
                     : const Text('Login'),
                 onPressed: () async => await _handleLogin(),
               ),
-              TextButton(
-                child: const Text('Go to Signup'),
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SignUpPage(),
-                    ),
-                  );
-                },
-              ),
-              TextButton(
-                child: const Text('Do you forget password?'),
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ResetPasswordPage(),
-                    ),
-                  );
-                },
-              ),
+              _LinkText(
+                  text: 'Go to Signup',
+                  builder: (context) => const SignUpPage()),
+              _LinkText(
+                  text: 'Do you forget password?',
+                  builder: (context) => const ResetPasswordPage())
             ],
           ),
         ),
@@ -141,4 +107,58 @@ Future<void> _showErrorDialog(BuildContext context, String message) {
       ],
     ),
   );
+}
+
+class _ValidateForm extends StatelessWidget {
+  const _ValidateForm(
+      {required this.controller,
+      required this.formLabel,
+      required this.validateText});
+
+  final TextEditingController controller;
+  final String formLabel;
+  final String validateText;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: formLabel,
+      ),
+      obscureText: true,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return validateText;
+        }
+        return null;
+      },
+    );
+  }
+}
+
+class _LinkText extends StatelessWidget {
+  const _LinkText({
+    super.key,
+    required this.text,
+    required this.builder,
+  });
+
+  final String text;
+  final Widget Function(BuildContext) builder;
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      child: Text(text), // constを削除（textは変数なのでconst不可）
+      onPressed: () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: builder, // requestFocusは不要
+          ),
+        );
+      },
+    );
+  }
 }
