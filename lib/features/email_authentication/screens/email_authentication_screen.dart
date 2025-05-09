@@ -1,6 +1,7 @@
 // ref: https://github.com/heyhey1028/flutter_supabase_auth/blob/main/lib/pages/login_page.dart
 
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:widget_creator/features/email_authentication/screens/reset_password_screen.dart';
 import 'package:widget_creator/features/email_authentication/screens/signup_screen.dart';
 import 'package:widget_creator/features/email_authentication/services/authentication_service.dart';
@@ -37,16 +38,13 @@ class _LoginPageState extends State<LoginPage> {
 
       if (response.user == null) return;
 
-      // 成功時の処理
       Navigator.of(context).pop();
-      //todo: add login error popup
-      // 1. Email not confirmed
-      // Error: AuthApiException(message: Email not confirmed, statusCode: 400, code: email_not_confirmed)
-      // 2. Invalid login credentials
-      // Error: AuthApiException(message: Invalid login credentials, statusCode: 400, code: invalid_credentials)
-    } catch (e) {
+    } on AuthException catch (e) {
       if (!mounted) return;
-      await _showErrorDialog(context, e.toString());
+      await _showErrorDialog(context, 'Authentication error: ${e.message}');
+    } on Exception catch (e) {
+      if (!mounted) return;
+      await _showErrorDialog(context, 'Unknown error: $e');
     } finally {
       if (mounted) {
         setState(() => isLoading = false);
