@@ -87,7 +87,6 @@ class _LoginPageState extends State<LoginPage> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      // todo: create password reset page
                       builder: (context) => const SignUpPage(),
                     ),
                   );
