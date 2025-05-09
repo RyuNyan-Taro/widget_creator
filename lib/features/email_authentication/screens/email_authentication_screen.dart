@@ -19,6 +19,41 @@ class _LoginPageState extends State<LoginPage> {
   bool isLoading = false;
   final AuthService authClient = AuthService();
 
+  Future<void> _handleLogin() async {
+    if (!_formKey.currentState!.validate()) {
+      print('not varidated');
+      return;
+    }
+
+    try {
+      setState(() => isLoading = true);
+
+      final response = await authClient.loginWithPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+
+      if (!mounted) return;
+
+      if (response.user == null) return;
+
+      // 成功時の処理
+      Navigator.of(context).pop();
+      //todo: add login error popup
+      // 1. Email not confirmed
+      // Error: AuthApiException(message: Email not confirmed, statusCode: 400, code: email_not_confirmed)
+      // 2. Invalid login credentials
+      // Error: AuthApiException(message: Invalid login credentials, statusCode: 400, code: invalid_credentials)
+    } catch (e) {
+      if (!mounted) return;
+      await _showErrorDialog(context, e.toString());
+    } finally {
+      if (mounted) {
+        setState(() => isLoading = false);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,23 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: isLoading
                     ? const CircularProgressIndicator()
                     : const Text('Login'),
-                onPressed: () async {
-                  //todo: add login error popup
-                  // 1. Email not confirmed
-                  // Error: AuthApiException(message: Email not confirmed, statusCode: 400, code: email_not_confirmed)
-                  // 2. Invalid login credentials
-                  // Error: AuthApiException(message: Invalid login credentials, statusCode: 400, code: invalid_credentials)
-                  if (_formKey.currentState!.validate()) {
-                    final response = await authClient.loginWithPassword(
-                      email: _emailController.text,
-                      password: _passwordController.text,
-                    );
-                    if (response.user == null) {
-                      return;
-                    }
-                    Navigator.of(context).pop();
-                  }
-                },
+                onPressed: () async => await _handleLogin(),
               ),
               TextButton(
                 child: const Text('Go to Signup'),
@@ -109,4 +128,20 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
+}
+
+Future<void> _showErrorDialog(BuildContext context, String message) {
+  return showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('エラー'),
+      content: Text(message),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('OK'),
+        ),
+      ],
+    ),
+  );
 }
