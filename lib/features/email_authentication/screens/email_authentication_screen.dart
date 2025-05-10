@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:widget_creator/features/email_authentication/screens/reset_password_screen.dart';
 import 'package:widget_creator/features/email_authentication/screens/signup_screen.dart';
+import 'package:widget_creator/features/email_authentication/screens/success_login_screen.dart';
 import 'package:widget_creator/features/email_authentication/services/authentication_service.dart';
 import 'package:widget_creator/features/email_authentication/utils/auth_handler.dart';
 import 'package:widget_creator/features/email_authentication/widgets/validate_form.dart';
@@ -23,7 +24,13 @@ class LoginPage extends StatelessWidget {
           children: <Widget>[
             _LoginForm(
               onLoginSuccess: (user) {
-                Navigator.of(context).pop();
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SuccessLoginPage(),
+                  ),
+                );
+                ;
               },
             ),
             const SizedBox(height: 8.0),
