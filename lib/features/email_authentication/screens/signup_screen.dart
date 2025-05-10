@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:widget_creator/features/email_authentication/services/authentication_service.dart';
+import 'package:widget_creator/features/email_authentication/widgets/validate_form.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -31,60 +32,29 @@ class _SignUpPageState extends State<SignUpPage> {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             children: <Widget>[
-              TextFormField(
+              ValidateForm(
                 controller: _emailController,
+                formLabel: 'Email',
+                validateText: 'Please enter your email',
                 keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  return null;
-                },
               ),
-              TextFormField(
-                controller: _userNameController,
-                keyboardType: TextInputType.name,
-                decoration: const InputDecoration(
-                  labelText: 'User Name',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your user name';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
+              ValidateForm(
+                  controller: _userNameController,
+                  formLabel: 'User Name',
+                  validateText: 'Please enter your user name',
+                  keyboardType: TextInputType.name),
+              ValidateForm(
                 controller: _passwordController,
-                decoration: const InputDecoration(
-                  labelText: 'Password',
-                ),
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
+                formLabel: 'Password',
+                validateText: 'Please enter your password',
+                obscure: true,
               ),
-              TextFormField(
+              ValidateForm(
                 controller: _confirmPasswordController,
-                decoration: const InputDecoration(
-                  labelText: 'Confirm Password',
-                ),
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please confirm your password';
-                  }
-                  if (value != _passwordController.text) {
-                    return 'Passwords do not match';
-                  }
-                  return null;
-                },
+                formLabel: 'Confirm Password',
+                validateText: 'Please enter your password',
+                obscure: true,
+                validateController: _passwordController,
               ),
               const SizedBox(height: 24.0), // Spacer(
 
