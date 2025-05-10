@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:widget_creator/features/email_authentication/services/authentication_service.dart';
+import 'package:widget_creator/features/email_authentication/utils/dialog.dart';
 import 'package:widget_creator/features/email_authentication/widgets/validate_form.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -24,15 +26,30 @@ class _SignUpPageState extends State<SignUpPage> {
       return;
     }
 
-    setState(() => _isLoading = true);
+    try {
+      setState(() => _isLoading = true);
 
-    await _authClient.signUp(
-      email: _emailController.text,
-      userName: _userNameController.text,
-      password: _passwordController.text,
-    );
-    if (!mounted) return;
-    Navigator.of(context).pop();
+      await _authClient.signUp(
+        email: _emailController.text,
+        userName: _userNameController.text,
+        password: _passwordController.text,
+      );
+
+      if (!mounted) return;
+
+      // todo: add login success page
+      Navigator.of(context).pop();
+    } on AuthException catch (e) {
+      if (!mounted) return;
+      await showErrorDialog(context, 'Authentication error: ${e.message}');
+    } on Exception catch (e) {
+      if (!mounted) return;
+      await showErrorDialog(context, 'Unknown error: $e');
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
   }
 
   @override

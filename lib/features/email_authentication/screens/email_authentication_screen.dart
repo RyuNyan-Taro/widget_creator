@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:widget_creator/features/email_authentication/screens/reset_password_screen.dart';
 import 'package:widget_creator/features/email_authentication/screens/signup_screen.dart';
 import 'package:widget_creator/features/email_authentication/services/authentication_service.dart';
+import 'package:widget_creator/features/email_authentication/utils/dialog.dart';
 import 'package:widget_creator/features/email_authentication/widgets/validate_form.dart';
 
 class LoginPage extends StatelessWidget {
@@ -79,10 +80,10 @@ class _LoginFormState extends State<_LoginForm> {
       widget.onLoginSuccess(response.user!);
     } on AuthException catch (e) {
       if (!mounted) return;
-      await _showErrorDialog(context, 'Authentication error: ${e.message}');
+      await showErrorDialog(context, 'Authentication error: ${e.message}');
     } on Exception catch (e) {
       if (!mounted) return;
-      await _showErrorDialog(context, 'Unknown error: $e');
+      await showErrorDialog(context, 'Unknown error: $e');
     } finally {
       if (mounted) {
         setState(() => _isLoading = false);
@@ -119,22 +120,6 @@ class _LoginFormState extends State<_LoginForm> {
       ),
     );
   }
-}
-
-Future<void> _showErrorDialog(BuildContext context, String message) {
-  return showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: const Text('エラー'),
-      content: Text(message),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(),
-          child: const Text('OK'),
-        ),
-      ],
-    ),
-  );
 }
 
 class _LoginLinks extends StatelessWidget {
