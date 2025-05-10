@@ -20,16 +20,19 @@ class _SignUpPageState extends State<SignUpPage> {
   final AuthService authClient = AuthService();
 
   Future<void> _handleSignUp() async {
-    if (isLoading) return;
-    if (_formKey.currentState!.validate()) {
-      await authClient.signUp(
-        email: _emailController.text,
-        userName: _userNameController.text,
-        password: _passwordController.text,
-      );
-      if (!mounted) return;
-      Navigator.of(context).pop();
+    if (!_formKey.currentState!.validate()) {
+      return;
     }
+
+    setState(() => isLoading = true);
+
+    await authClient.signUp(
+      email: _emailController.text,
+      userName: _userNameController.text,
+      password: _passwordController.text,
+    );
+    if (!mounted) return;
+    Navigator.of(context).pop();
   }
 
   @override
@@ -72,7 +75,7 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(height: 24.0), // Spacer(
 
               ElevatedButton(
-                onPressed: _handleSignUp,
+                onPressed: isLoading ? null : _handleSignUp,
                 child: isLoading
                     ? const CircularProgressIndicator()
                     : const Text('Signup'),
