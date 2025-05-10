@@ -24,7 +24,7 @@ class TopPage extends StatelessWidget {
               _NavigateText(text: 'Cards', nextPage: () => const CardPage()),
               _NavigateText(
                   text: 'Blog', nextPage: () => const BlogListScreen()),
-              _NavigateText(text: 'Auth', nextPage: () => const LoginPage()),
+              _NavigateText(text: 'Auth', nextPage: () => LoginPage()),
             ],
           ),
         ));

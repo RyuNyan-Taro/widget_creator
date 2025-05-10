@@ -9,11 +9,50 @@ import 'package:widget_creator/features/email_authentication/services/authentica
 import 'package:widget_creator/features/email_authentication/utils/auth_handler.dart';
 import 'package:widget_creator/features/email_authentication/widgets/validate_form.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _authClient = AuthService();
+  bool _isChecking = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkAuthState();
+  }
+
+  Future<void> _checkAuthState() async {
+    final user = await _authClient.checkAuthState();
+    if (user != null && mounted) {
+      _navigateToSuccess();
+    } else if (mounted) {
+      setState(() => _isChecking = false);
+    }
+  }
+
+  void _navigateToSuccess() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SuccessLoginPage(),
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (_isChecking) {
+      return const Scaffold(
+          body: Center(
+        child: CircularProgressIndicator(),
+      ));
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
@@ -24,13 +63,7 @@ class LoginPage extends StatelessWidget {
           children: <Widget>[
             _LoginForm(
               onLoginSuccess: (user) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SuccessLoginPage(),
-                  ),
-                );
-                ;
+                _navigateToSuccess();
               },
             ),
             const SizedBox(height: 8.0),
