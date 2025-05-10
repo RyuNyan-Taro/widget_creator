@@ -5,7 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:widget_creator/features/email_authentication/screens/reset_password_screen.dart';
 import 'package:widget_creator/features/email_authentication/screens/signup_screen.dart';
 import 'package:widget_creator/features/email_authentication/services/authentication_service.dart';
-import 'package:widget_creator/features/email_authentication/utils/dialog.dart';
+import 'package:widget_creator/features/email_authentication/utils/auth_handler.dart';
 import 'package:widget_creator/features/email_authentication/widgets/validate_form.dart';
 
 class LoginPage extends StatelessWidget {
@@ -50,45 +50,33 @@ class _LoginFormState extends State<_LoginForm> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  bool _isLoading = false;
+  final _isLoadingNotifier = ValueNotifier<bool>(false);
   final _authClient = AuthService();
 
   @override
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
+    _isLoadingNotifier.dispose();
     super.dispose();
   }
 
   Future<void> _handleLogin() async {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
+    if (!_formKey.currentState!.validate()) return;
 
-    try {
-      setState(() => _isLoading = true);
-
-      final response = await _authClient.loginWithPassword(
+    await AuthHandler.handle(
+      context: context,
+      loadingNotifier: _isLoadingNotifier,
+      authCallback: () => _authClient.loginWithPassword(
         email: _emailController.text,
         password: _passwordController.text,
-      );
-
-      if (!mounted) return;
-
-      if (response.user == null) return;
-
-      widget.onLoginSuccess(response.user!);
-    } on AuthException catch (e) {
-      if (!mounted) return;
-      await showErrorDialog(context, 'Authentication error: ${e.message}');
-    } on Exception catch (e) {
-      if (!mounted) return;
-      await showErrorDialog(context, 'Unknown error: $e');
-    } finally {
-      if (mounted) {
-        setState(() => _isLoading = false);
-      }
-    }
+      ),
+      onSuccess: (response) {
+        if (response.user != null) {
+          widget.onLoginSuccess(response.user!);
+        }
+      },
+    );
   }
 
   @override
@@ -101,12 +89,16 @@ class _LoginFormState extends State<_LoginForm> {
         children: <Widget>[
           EmailValidateForm(controller: _emailController),
           PasswordValidateForm(controller: _passwordController),
-          ElevatedButton(
-            onPressed: _isLoading ? null : _handleLogin,
-            child: _isLoading
-                ? const CircularProgressIndicator()
-                : const Text('Login'),
-          ),
+          ValueListenableBuilder(
+              valueListenable: _isLoadingNotifier,
+              builder: (context, isLoading, child) {
+                return ElevatedButton(
+                  onPressed: isLoading ? null : _handleLogin,
+                  child: isLoading
+                      ? const CircularProgressIndicator()
+                      : const Text('Login'),
+                );
+              })
         ],
       ),
     );

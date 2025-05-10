@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:widget_creator/features/email_authentication/services/authentication_service.dart';
-import 'package:widget_creator/features/email_authentication/utils/dialog.dart';
+import 'package:widget_creator/features/email_authentication/utils/auth_handler.dart';
 import 'package:widget_creator/features/email_authentication/widgets/validate_form.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -18,38 +17,34 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-  bool _isLoading = false;
+  final _isLoadingNotifier = ValueNotifier<bool>(false);
   final AuthService _authClient = AuthService();
 
+  @override
+  void dispose() {
+    _isLoadingNotifier.dispose(); // ValueNotifierの解放
+    _emailController.dispose();
+    _userNameController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
   Future<void> _handleSignUp() async {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
+    if (!_formKey.currentState!.validate()) return;
 
-    try {
-      setState(() => _isLoading = true);
-
-      await _authClient.signUp(
+    await AuthHandler.handle(
+      context: context,
+      loadingNotifier: _isLoadingNotifier,
+      authCallback: () => _authClient.signUp(
         email: _emailController.text,
         userName: _userNameController.text,
         password: _passwordController.text,
-      );
-
-      if (!mounted) return;
-
-      // todo: add login success page
-      Navigator.of(context).pop();
-    } on AuthException catch (e) {
-      if (!mounted) return;
-      await showErrorDialog(context, 'Authentication error: ${e.message}');
-    } on Exception catch (e) {
-      if (!mounted) return;
-      await showErrorDialog(context, 'Unknown error: $e');
-    } finally {
-      if (mounted) {
-        setState(() => _isLoading = false);
-      }
-    }
+      ),
+      onSuccess: (_) {
+        Navigator.of(context).pop();
+      },
+    );
   }
 
   @override
@@ -71,13 +66,17 @@ class _SignUpPageState extends State<SignUpPage> {
               ConfirmPasswordValidateForm(
                   controller: _confirmPasswordController,
                   validateController: _passwordController),
-              const SizedBox(height: 24.0), // Spacer(
-              ElevatedButton(
-                onPressed: _isLoading ? null : _handleSignUp,
-                child: _isLoading
-                    ? const CircularProgressIndicator()
-                    : const Text('Signup'),
-              ),
+              const SizedBox(height: 24.0),
+              ValueListenableBuilder(
+                  valueListenable: _isLoadingNotifier,
+                  builder: (context, isLoading, child) {
+                    return ElevatedButton(
+                      onPressed: isLoading ? null : _handleSignUp,
+                      child: isLoading
+                          ? const CircularProgressIndicator()
+                          : const Text('Signup'),
+                    );
+                  }), // Spacer(
               TextButton(
                 child: const Text('Go to Login'),
                 onPressed: () {
