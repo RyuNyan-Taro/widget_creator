@@ -32,7 +32,7 @@ class ValidateForm extends StatelessWidget {
           return validateText;
         }
         if (validateController != null) {
-          if (value != controller.text) {
+          if (value != validateController!.text) {
             return 'value do not match';
           }
         }
