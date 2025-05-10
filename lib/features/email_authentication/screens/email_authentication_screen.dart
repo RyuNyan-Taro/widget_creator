@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:widget_creator/features/email_authentication/screens/reset_password_screen.dart';
 import 'package:widget_creator/features/email_authentication/screens/signup_screen.dart';
 import 'package:widget_creator/features/email_authentication/services/authentication_service.dart';
+import 'package:widget_creator/features/email_authentication/widgets/validate_form.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -97,12 +98,12 @@ class _LoginFormState extends State<_LoginForm> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          _ValidateForm(
+          ValidateForm(
             controller: _emailController,
             formLabel: 'Email',
             validateText: 'Please enter your email',
           ),
-          _ValidateForm(
+          ValidateForm(
             controller: _passwordController,
             formLabel: 'Password',
             validateText: 'Please enter your password',
@@ -134,37 +135,6 @@ Future<void> _showErrorDialog(BuildContext context, String message) {
       ],
     ),
   );
-}
-
-class _ValidateForm extends StatelessWidget {
-  const _ValidateForm({
-    required this.controller,
-    required this.formLabel,
-    required this.validateText,
-    this.obscure = false,
-  });
-
-  final TextEditingController controller;
-  final String formLabel;
-  final String validateText;
-  final bool obscure;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-        labelText: formLabel,
-      ),
-      obscureText: obscure,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return validateText;
-        }
-        return null;
-      },
-    );
-  }
 }
 
 class _LoginLinks extends StatelessWidget {
