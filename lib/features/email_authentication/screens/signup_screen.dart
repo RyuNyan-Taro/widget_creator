@@ -73,7 +73,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 validateController: _passwordController,
               ),
               const SizedBox(height: 24.0), // Spacer(
-
               ElevatedButton(
                 onPressed: isLoading ? null : _handleSignUp,
                 child: isLoading
