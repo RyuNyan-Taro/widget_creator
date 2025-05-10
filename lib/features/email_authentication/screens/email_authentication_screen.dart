@@ -99,17 +99,8 @@ class _LoginFormState extends State<_LoginForm> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          ValidateForm(
-            controller: _emailController,
-            formLabel: 'Email',
-            validateText: 'Please enter your email',
-          ),
-          ValidateForm(
-            controller: _passwordController,
-            formLabel: 'Password',
-            validateText: 'Please enter your password',
-            obscure: true,
-          ),
+          EmailValidateForm(controller: _emailController),
+          PasswordValidateForm(controller: _passwordController),
           ElevatedButton(
             onPressed: _isLoading ? null : _handleLogin,
             child: _isLoading

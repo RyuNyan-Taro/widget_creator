@@ -65,30 +65,12 @@ class _SignUpPageState extends State<SignUpPage> {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             children: <Widget>[
-              ValidateForm(
-                controller: _emailController,
-                formLabel: 'Email',
-                validateText: 'Please enter your email',
-                keyboardType: TextInputType.emailAddress,
-              ),
-              ValidateForm(
-                  controller: _userNameController,
-                  formLabel: 'User Name',
-                  validateText: 'Please enter your user name',
-                  keyboardType: TextInputType.name),
-              ValidateForm(
-                controller: _passwordController,
-                formLabel: 'Password',
-                validateText: 'Please enter your password',
-                obscure: true,
-              ),
-              ValidateForm(
-                controller: _confirmPasswordController,
-                formLabel: 'Confirm Password',
-                validateText: 'Please enter your password',
-                obscure: true,
-                validateController: _passwordController,
-              ),
+              EmailValidateForm(controller: _emailController),
+              NameValidateForm(controller: _userNameController),
+              PasswordValidateForm(controller: _passwordController),
+              ConfirmPasswordValidateForm(
+                  controller: _confirmPasswordController,
+                  validateController: _passwordController),
               const SizedBox(height: 24.0), // Spacer(
               ElevatedButton(
                 onPressed: _isLoading ? null : _handleSignUp,
