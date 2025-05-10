@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:widget_creator/features/email_authentication/services/authentication_service.dart';
+import 'package:widget_creator/features/email_authentication/widgets/validate_form.dart';
 
 class ResetPasswordPage extends StatefulWidget {
   const ResetPasswordPage({super.key});
@@ -27,18 +28,11 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
           autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             children: <Widget>[
-              TextFormField(
+              ValidateForm(
                 controller: _emailController,
+                formLabel: 'Email',
+                validateText: 'Please enter your email',
                 keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  return null;
-                },
               ),
               const SizedBox(height: 12.0),
               ElevatedButton(
