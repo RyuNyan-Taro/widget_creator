@@ -106,6 +106,7 @@ class _LoginFormState extends State<_LoginForm> {
             controller: _passwordController,
             formLabel: 'Password',
             validateText: 'Please enter your password',
+            obscure: true,
           ),
           ElevatedButton(
             onPressed: _isLoading ? null : _handleLogin,
@@ -136,14 +137,17 @@ Future<void> _showErrorDialog(BuildContext context, String message) {
 }
 
 class _ValidateForm extends StatelessWidget {
-  const _ValidateForm(
-      {required this.controller,
-      required this.formLabel,
-      required this.validateText});
+  const _ValidateForm({
+    required this.controller,
+    required this.formLabel,
+    required this.validateText,
+    this.obscure = false,
+  });
 
   final TextEditingController controller;
   final String formLabel;
   final String validateText;
+  final bool obscure;
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +156,7 @@ class _ValidateForm extends StatelessWidget {
       decoration: InputDecoration(
         labelText: formLabel,
       ),
-      obscureText: true,
+      obscureText: obscure,
       validator: (value) {
         if (value == null || value.isEmpty) {
           return validateText;
