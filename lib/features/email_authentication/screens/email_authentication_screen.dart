@@ -171,7 +171,7 @@ class _LinkText extends StatelessWidget {
     return TextButton(
       child: Text(text), // constを削除（textは変数なのでconst不可）
       onPressed: () {
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
           MaterialPageRoute(
             builder: builder, // requestFocusは不要
