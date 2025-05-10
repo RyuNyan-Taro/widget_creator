@@ -16,17 +16,17 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-  bool isLoading = false;
-  final AuthService authClient = AuthService();
+  bool _isLoading = false;
+  final AuthService _authClient = AuthService();
 
   Future<void> _handleSignUp() async {
     if (!_formKey.currentState!.validate()) {
       return;
     }
 
-    setState(() => isLoading = true);
+    setState(() => _isLoading = true);
 
-    await authClient.signUp(
+    await _authClient.signUp(
       email: _emailController.text,
       userName: _userNameController.text,
       password: _passwordController.text,
@@ -74,8 +74,8 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
               const SizedBox(height: 24.0), // Spacer(
               ElevatedButton(
-                onPressed: isLoading ? null : _handleSignUp,
-                child: isLoading
+                onPressed: _isLoading ? null : _handleSignUp,
+                child: _isLoading
                     ? const CircularProgressIndicator()
                     : const Text('Signup'),
               ),
