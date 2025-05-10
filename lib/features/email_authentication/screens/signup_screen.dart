@@ -19,6 +19,19 @@ class _SignUpPageState extends State<SignUpPage> {
   bool isLoading = false;
   final AuthService authClient = AuthService();
 
+  Future<void> _handleSignUp() async {
+    if (isLoading) return;
+    if (_formKey.currentState!.validate()) {
+      await authClient.signUp(
+        email: _emailController.text,
+        userName: _userNameController.text,
+        password: _passwordController.text,
+      );
+      if (!mounted) return;
+      Navigator.of(context).pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,21 +72,10 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(height: 24.0), // Spacer(
 
               ElevatedButton(
+                onPressed: _handleSignUp,
                 child: isLoading
                     ? const CircularProgressIndicator()
                     : const Text('Signup'),
-                onPressed: () async {
-                  if (isLoading) return;
-                  if (_formKey.currentState!.validate()) {
-                    await authClient.signUp(
-                      email: _emailController.text,
-                      userName: _userNameController.text,
-                      password: _passwordController.text,
-                    );
-                    if (!mounted) return;
-                    Navigator.of(context).pop();
-                  }
-                },
               ),
               TextButton(
                 child: const Text('Go to Login'),
