@@ -1,6 +1,68 @@
 import 'package:flutter/material.dart';
 
-// todo: create common ValidateForms for call only the class without common args.
+class EmailValidateForm extends StatelessWidget {
+  const EmailValidateForm({super.key, required this.controller});
+
+  final TextEditingController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return ValidateForm(
+        controller: controller,
+        formLabel: 'Email',
+        validateText: 'Please enter your email',
+        keyboardType: TextInputType.emailAddress);
+  }
+}
+
+class NameValidateForm extends StatelessWidget {
+  const NameValidateForm({super.key, required this.controller});
+
+  final TextEditingController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return ValidateForm(
+        controller: controller,
+        formLabel: 'User Name',
+        validateText: 'Please enter your user name',
+        keyboardType: TextInputType.name);
+  }
+}
+
+class PasswordValidateForm extends StatelessWidget {
+  const PasswordValidateForm({super.key, required this.controller});
+
+  final TextEditingController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return ValidateForm(
+        controller: controller,
+        formLabel: 'Password',
+        validateText: 'Please enter your password',
+        obscure: true);
+  }
+}
+
+class ConfirmPasswordValidateForm extends StatelessWidget {
+  const ConfirmPasswordValidateForm(
+      {super.key, required this.controller, required this.validateController});
+
+  final TextEditingController controller;
+  final TextEditingController validateController;
+
+  @override
+  Widget build(BuildContext context) {
+    return ValidateForm(
+        controller: controller,
+        formLabel: 'Confirm Password',
+        validateText: 'Please enter your password',
+        obscure: true,
+        validateController: validateController);
+  }
+}
+
 class ValidateForm extends StatelessWidget {
   const ValidateForm(
       {super.key,
