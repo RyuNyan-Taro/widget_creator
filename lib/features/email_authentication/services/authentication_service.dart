@@ -32,4 +32,16 @@ class AuthService {
   Future<void> resetPasswordWithEmail({required String email}) async {
     return await _supabase.auth.resetPasswordForEmail(email);
   }
+
+  Future<User?> checkAuthState() async {
+    final session = _supabase.auth.currentSession;
+    if (session?.isExpired == false) {
+      return session?.user;
+    }
+    return null;
+  }
+
+  Future<void> signOut() async {
+    await _supabase.auth.signOut();
+  }
 }

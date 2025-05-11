@@ -8,37 +8,80 @@ import 'package:widget_creator/features/email_authentication/screens/success_log
 import 'package:widget_creator/features/email_authentication/services/authentication_service.dart';
 import 'package:widget_creator/features/email_authentication/utils/auth_handler.dart';
 import 'package:widget_creator/features/email_authentication/widgets/validate_form.dart';
+import 'package:widget_creator/features/top/top_view.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            _LoginForm(
-              onLoginSuccess: (user) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const SuccessLoginPage(),
-                  ),
-                );
-                ;
-              },
-            ),
-            const SizedBox(height: 8.0),
-            _LoginLinks(),
-          ],
-        ),
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final _authClient = AuthService();
+  bool _isChecking = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkAuthState();
+  }
+
+  Future<void> _checkAuthState() async {
+    final user = await _authClient.checkAuthState();
+    if (user != null && mounted) {
+      _navigateToSuccess();
+    } else if (mounted) {
+      setState(() => _isChecking = false);
+    }
+  }
+
+  void _navigateToSuccess() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const SuccessLoginPage(),
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_isChecking) {
+      return const Scaffold(
+          body: Center(
+        child: CircularProgressIndicator(),
+      ));
+    }
+
+    return PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPo, result) async {
+          await Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (context) => const TopPage(title: 'Top')),
+            (route) => false,
+          );
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('Login'),
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: <Widget>[
+                _LoginForm(
+                  onLoginSuccess: (user) {
+                    _navigateToSuccess();
+                  },
+                ),
+                const SizedBox(height: 8.0),
+                _LoginLinks(),
+              ],
+            ),
+          ),
+        ));
   }
 }
 
@@ -144,12 +187,12 @@ class _LinkText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      child: Text(text), // constを削除（textは変数なのでconst不可）
+      child: Text(text),
       onPressed: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: builder, // requestFocusは不要
+            builder: builder,
           ),
         );
       },
