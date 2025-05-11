@@ -8,6 +8,7 @@ import 'package:widget_creator/features/email_authentication/screens/success_log
 import 'package:widget_creator/features/email_authentication/services/authentication_service.dart';
 import 'package:widget_creator/features/email_authentication/utils/auth_handler.dart';
 import 'package:widget_creator/features/email_authentication/widgets/validate_form.dart';
+import 'package:widget_creator/features/top/top_view.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -53,25 +54,34 @@ class _LoginPageState extends State<LoginPage> {
       ));
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            _LoginForm(
-              onLoginSuccess: (user) {
-                _navigateToSuccess();
-              },
+    return PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPo, result) async {
+          await Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(
+                builder: (context) => const TopPage(title: 'Top')),
+            (route) => false,
+          );
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('Login'),
+          ),
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: <Widget>[
+                _LoginForm(
+                  onLoginSuccess: (user) {
+                    _navigateToSuccess();
+                  },
+                ),
+                const SizedBox(height: 8.0),
+                _LoginLinks(),
+              ],
             ),
-            const SizedBox(height: 8.0),
-            _LoginLinks(),
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }
 
